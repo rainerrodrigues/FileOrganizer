@@ -66,3 +66,35 @@ proc backup_files {directory backup_file} {
 	exec $tar_cmd
 }
 
+#Rename files with a give prefix
+proc rename_files {directory prefix} {
+	set files [list_files $directory]
+	set count 1
+	foreach file $files {
+		set ext [file extension $file]
+		set new_name "$directory/$prefix$count$ext"
+		file rename -force "$directory/$file" "$new_name"
+		incr count
+	}
+}
+
+# Main script
+set source_dir "source" ; #Change this to your source directory
+set target_dir "organized" ; #Change this to your target directory
+set backup_file "backup.tar.gz" ; #Change this to your desired backup location
+
+#Ensure target directory exits
+ensure_directory $target_dir
+
+# Call the organization functions as needed
+# Uncomment the desired function calls
+# organize_by_type $source_dir $target_dir
+# organize_by_date $source_dir $target_dir
+
+# Create a backup of the source directory
+#backup_files $source_dir $backup_file
+
+# Rename files in the source directory
+# rename_files $source_dir "file_"
+
+puts "File organization complete"
